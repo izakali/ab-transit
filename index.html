@@ -315,7 +315,7 @@
         .abm-map-label .leader { fill: none; stroke: rgba(238,243,250,.42); stroke-width: 2.2; stroke-linecap: round; }
         .abm-svg-boat .halo { fill: rgba(0, 168, 204, .2); stroke: rgba(0, 168, 204, .5); stroke-width: 3; }
         .abm-svg-boat .disc { fill: var(--motors-accent); filter: drop-shadow(0 10px 16px rgba(0,0,0,.5)); }
-        .abm-svg-boat .boat-mark { fill: none; stroke: #fff; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+        
         @keyframes abmRouteDash { to { stroke-dashoffset: -160; } }
         @keyframes abmMarkerPulse { 0%, 100% { opacity: .45; transform: scale(.86); transform-origin: center; } 50% { opacity: .12; transform: scale(1.18); transform-origin: center; } }
 
@@ -332,7 +332,6 @@
         
         /* AB Products Logistics Animations */
         .abp-logistics-map { width: 100%; height: 100%; overflow: visible; }
-        .abp-grid { stroke: rgba(47, 191, 139, 0.1); stroke-width: 1; }
         .abp-flight-path { fill: none; stroke: #fff; stroke-width: 3; stroke-dasharray: 8 8; filter: drop-shadow(0 0 10px rgba(255,255,255,0.5)); animation: abpDash 20s linear infinite reverse;}
         .abp-boat-path { fill: none; stroke: var(--products-accent); stroke-width: 3; stroke-dasharray: 8 8; filter: drop-shadow(0 0 10px rgba(47,191,139,0.5)); animation: abpDash 20s linear infinite reverse;}
         .abp-node-ring { fill: none; stroke: var(--products-accent); stroke-width: 4; animation: ping 2s ease-out infinite; }
@@ -368,7 +367,6 @@
         .slide-4 h2 {
             font-size: 3.5rem;
             margin-bottom: 20px;
-            margin-top: 30px;
         }
         .slide-4 p {
             font-size: 1.3rem;
@@ -383,7 +381,7 @@
             max-width: 800px;
             height: 350px;
             position: relative;
-            margin-top: -30px;
+            margin-top: 40px; /* Separator since it's now below the text */
         }
         .world-svg { width: 100%; height: 100%; overflow: visible; }
         .world-grid { fill: none; stroke: rgba(212, 175, 55, 0.1); stroke-width: 1; }
@@ -394,9 +392,13 @@
         .world-node-pulse { fill: none; stroke: var(--gold-main); stroke-width: 2; opacity: 0; transform-origin: center; }
         .slide-4.active .world-node-pulse { animation: worldPulse 2s infinite; animation-delay: calc(var(--delay) * 1s); }
         
+        .moving-vehicle { opacity: 0; }
+        .slide-4.active .moving-vehicle { animation: fadeInVehicle 0.5s ease forwards; animation-delay: calc(var(--delay) * 1s + 1s); }
+        
         @keyframes drawLine { to { stroke-dashoffset: 0; } }
         @keyframes popNode { to { opacity: 1; transform: scale(1); } }
         @keyframes worldPulse { 0% { transform: scale(1); opacity: 0.8; } 100% { transform: scale(3); opacity: 0; } }
+        @keyframes fadeInVehicle { to { opacity: 1; filter: drop-shadow(0 0 8px var(--gold-main)); } }
 
 
         /* SVG Icons */
@@ -524,18 +526,31 @@
                                 <text class="sub" x="0" y="25">Liaison inter-îles</text>
                             </g>
 
-                            <!-- Boats -->
+                            <!-- Cargo Boat Animation SVG -->
                             <g class="abm-svg-boat">
-                                <g transform="translate(-24 -24)">
-                                    <circle class="halo" cx="24" cy="24" r="22"></circle><circle class="disc" cx="24" cy="24" r="16"></circle>
-                                    <path class="boat-mark" d="M15 29c3 2 6 2 9 0 3 2 6 2 9 0M17 26l3-10h8l3 10M21 16v-5h6v5"></path>
+                                <circle class="halo" cx="0" cy="0" r="22"></circle>
+                                <g transform="translate(-16, -16) scale(1.1)">
+                                    <!-- Hull -->
+                                    <path d="M2,18 l0,6 h22 l6,-6 Z" fill="var(--motors-accent)"/>
+                                    <!-- Containers -->
+                                    <rect x="4" y="10" width="4" height="7" fill="var(--motors-accent)"/>
+                                    <rect x="9" y="10" width="4" height="7" fill="var(--motors-accent)"/>
+                                    <rect x="14" y="10" width="4" height="7" fill="var(--motors-accent)"/>
+                                    <rect x="19" y="10" width="4" height="7" fill="var(--motors-accent)"/>
+                                    <!-- Bridge -->
+                                    <rect x="2" y="8" width="5" height="10" fill="var(--motors-accent)"/>
                                 </g>
                                 <animateMotion dur="8.5s" repeatCount="indefinite" rotate="auto"><mpath href="#abmRouteMoroni"></mpath></animateMotion>
                             </g>
                             <g class="abm-svg-boat">
-                                <g transform="translate(-24 -24)">
-                                    <circle class="halo" cx="24" cy="24" r="22"></circle><circle class="disc" cx="24" cy="24" r="16"></circle>
-                                    <path class="boat-mark" d="M15 29c3 2 6 2 9 0 3 2 6 2 9 0M17 26l3-10h8l3 10M21 16v-5h6v5"></path>
+                                <circle class="halo" cx="0" cy="0" r="22"></circle>
+                                <g transform="translate(-16, -16) scale(1.1)">
+                                    <path d="M2,18 l0,6 h22 l6,-6 Z" fill="var(--motors-accent)"/>
+                                    <rect x="4" y="10" width="4" height="7" fill="var(--motors-accent)"/>
+                                    <rect x="9" y="10" width="4" height="7" fill="var(--motors-accent)"/>
+                                    <rect x="14" y="10" width="4" height="7" fill="var(--motors-accent)"/>
+                                    <rect x="19" y="10" width="4" height="7" fill="var(--motors-accent)"/>
+                                    <rect x="2" y="8" width="5" height="10" fill="var(--motors-accent)"/>
                                 </g>
                                 <animateMotion dur="7.3s" begin="-2.2s" repeatCount="indefinite" rotate="auto"><mpath href="#abmRouteAnjouan"></mpath></animateMotion>
                             </g>
@@ -552,32 +567,38 @@
                     <img src="abp.PNG" alt="AB Products" class="small-logo">
                     <div class="svg-container">
                         <svg class="abp-logistics-map" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet">
-                            <!-- Background Grid abstract -->
-                            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-                                <path d="M 40 0 L 0 0 0 40" fill="none" class="abp-grid"/>
-                            </pattern>
-                            <rect width="800" height="600" fill="url(#grid)" />
                             
-                            <!-- Paths -->
-                            <path id="flightPathFRKM" class="abp-flight-path" d="M120,120 Q 500,50 650,320" />
-                            <path id="boatPathKMMO" class="abp-boat-path" d="M650,320 Q 600,450 450,520" />
-
-                            <!-- Nodes & Labels -->
-                            <g transform="translate(120,120)">
-                                <circle class="abp-node-ring" cx="0" cy="0" r="10"/>
-                                <circle class="abp-node-core" cx="0" cy="0" r="8"/>
-                                <text class="abp-sub" x="-40" y="-35">Achat</text>
-                                <text class="abp-label" x="-40" y="-10">FRANCE</text>
+                            <!-- Simplified France Outline -->
+                            <g id="map-france" transform="translate(45, 45)">
+                                <path d="M 95 10 L 110 5 L 120 25 L 140 45 L 135 60 L 145 75 L 135 100 L 110 115 L 95 140 L 75 130 L 60 145 L 35 125 L 5 80 L 10 60 L 30 55 L 35 35 L 75 25 Z" fill="rgba(47, 191, 139, 0.08)" stroke="var(--products-accent)" stroke-width="1.5" stroke-dasharray="4 4" />
                             </g>
 
-                            <g transform="translate(650,320)">
+                            <!-- Comoros Map Placed Properly -->
+                            <g id="map-comoros" transform="scale(0.3) translate(1800, 600)" stroke-width="5">
+                                <path class="abm-island-path" d="M75 9 L72 13 L68 11 L61 12 L44 24 L36 39 L33 65 L30 73 L36 84 L36 97 L40 104 L41 115 L37 131 L31 142 L30 160 L34 169 L26 197 L27 247 L30 251 L31 260 L23 266 L18 284 L12 287 L8 294 L8 300 L0 309 L2 328 L7 335 L9 352 L20 359 L31 373 L32 387 L44 405 L59 413 L79 417 L84 412 L88 414 L88 417 L96 415 L118 417 L129 425 L130 431 L150 455 L162 460 L169 468 L175 469 L176 465 L179 465 L185 477 L191 476 L198 482 L195 474 L196 471 L206 482 L213 479 L213 473 L221 473 L224 470 L226 458 L241 443 L234 438 L232 433 L227 432 L221 426 L217 418 L209 414 L209 404 L200 385 L193 379 L193 371 L186 354 L188 344 L185 335 L185 320 L173 297 L173 291 L166 284 L164 272 L156 259 L145 250 L137 235 L140 228 L134 210 L137 202 L135 194 L139 177 L144 172 L147 130 L141 120 L140 113 L142 107 L140 102 L149 89 L149 78 L155 64 L153 47 L148 34 L144 30 L140 20 L140 13 L137 9 L131 7 L123 9 L118 5 L112 5 L106 0 Z" fill="rgba(47, 191, 139, 0.2)" stroke="var(--products-accent)"></path>
+                                <path class="abm-island-path" d="M332 618 L332 635 L330 638 L341 655 L342 663 L339 666 L352 666 L360 670 L364 675 L366 690 L362 694 L362 700 L369 696 L374 701 L384 702 L386 699 L403 701 L409 708 L413 707 L412 703 L414 701 L425 702 L432 708 L432 701 L437 699 L450 704 L458 716 L458 707 L463 705 L471 710 L487 710 L491 715 L497 714 L511 718 L523 718 L529 724 L535 725 L536 704 L529 697 L520 682 L514 682 L504 673 L493 667 L487 669 L478 667 L470 660 L468 655 L459 653 L454 648 L452 642 L441 642 L421 624 L413 626 L408 623 L401 623 L392 616 L362 613 L359 607 L352 607 L344 614 L338 614 Z" fill="rgba(47, 191, 139, 0.2)" stroke="var(--products-accent)"></path>
+                            </g>
+
+                            <!-- Paths -->
+                            <path id="flightPathFRKM" class="abp-flight-path" d="M140,150 Q 300,50 548,272" />
+                            <path id="boatPathKMMO" class="abp-boat-path" d="M548,272 Q 600,340 667,379" />
+
+                            <!-- Nodes & Labels -->
+                            <g transform="translate(140,150)">
+                                <circle class="abp-node-ring" cx="0" cy="0" r="10"/>
+                                <circle class="abp-node-core" cx="0" cy="0" r="8"/>
+                                <text class="abp-sub" x="-45" y="-25">Achat</text>
+                                <text class="abp-label" x="-45" y="0">FRANCE</text>
+                            </g>
+
+                            <g transform="translate(548,272)">
                                 <circle class="abp-node-ring" cx="0" cy="0" r="10" style="animation-delay: 0.5s; stroke: #fff;"/>
                                 <circle class="abp-node-core" cx="0" cy="0" r="8" style="stroke: #fff; filter: drop-shadow(0 0 15px #fff);"/>
                                 <text class="abp-sub" x="25" y="-10">Transit</text>
                                 <text class="abp-label" x="25" y="15">MORONI</text>
                             </g>
 
-                            <g transform="translate(450,520)">
+                            <g transform="translate(667,379)">
                                 <circle class="abp-node-ring" cx="0" cy="0" r="12" style="animation-delay: 1s;"/>
                                 <circle class="abp-node-core" cx="0" cy="0" r="10"/>
                                 <text class="abp-sub" x="-110" y="0">Réception</text>
@@ -595,9 +616,13 @@
                             </g>
 
                             <g class="abp-cargo-boat">
-                                <g transform="translate(-20, -20)">
-                                    <path d="M4 21.5h32M8 17.5h24M12 13.5h16M14 9.5h8M16 5.5h4"></path>
-                                    <path d="M36 21.5l-4-16H8l-4 16"></path>
+                                <g transform="translate(-16, -16) scale(1.1)">
+                                    <path d="M2,18 l0,6 h22 l6,-6 Z" fill="var(--products-accent)"/>
+                                    <rect x="4" y="10" width="4" height="7" fill="var(--products-accent)"/>
+                                    <rect x="9" y="10" width="4" height="7" fill="var(--products-accent)"/>
+                                    <rect x="14" y="10" width="4" height="7" fill="var(--products-accent)"/>
+                                    <rect x="19" y="10" width="4" height="7" fill="var(--products-accent)"/>
+                                    <rect x="2" y="8" width="5" height="10" fill="var(--products-accent)"/>
                                 </g>
                                 <animateMotion dur="4s" begin="2.5s" repeatCount="indefinite" rotate="auto">
                                     <mpath href="#boatPathKMMO"></mpath>
@@ -623,6 +648,8 @@
             <div class="glow-orb"></div>
             <div class="center-content">
                 <div class="brand-font" style="color: var(--gold-main); margin-bottom: 15px; letter-spacing: 4px;">VISION GLOBALE</div>
+                <h2>AB TRANSIT EST BIEN PLUS ENCORE</h2>
+                <p>De nombreux projets novateurs sont actuellement en cours de développement pour enrichir et interconnecter notre écosystème. L'avenir nous réserve de grandes ambitions avec une expansion progressive à travers toute l'Afrique, puis vers une dimension internationale pour toujours mieux vous accompagner.</p>
                 
                 <div class="future-map-container">
                     <svg class="world-svg" viewBox="0 0 1000 400" preserveAspectRatio="xMidYMid meet">
@@ -633,11 +660,66 @@
                         <line x1="50" y1="200" x2="950" y2="200" class="world-grid" />
 
                         <!-- Expansion Paths -->
-                        <path class="expansion-line" style="--delay: 0.5;" d="M500,250 Q 400,200 300,250" /> <!-- Africa West -->
-                        <path class="expansion-line" style="--delay: 1.0;" d="M500,250 Q 550,150 480,80" /> <!-- Europe -->
-                        <path class="expansion-line" style="--delay: 1.5;" d="M500,250 Q 650,200 750,150" /> <!-- Asia -->
-                        <path class="expansion-line" style="--delay: 2.0;" d="M500,250 Q 350,50 150,120" /> <!-- Americas -->
-                        <path class="expansion-line" style="--delay: 2.5;" d="M500,250 Q 650,350 850,280" /> <!-- Oceania -->
+                        <path id="path-africa" class="expansion-line" style="--delay: 0.5;" d="M500,250 Q 400,200 300,250" /> <!-- Africa West -->
+                        <path id="path-europe" class="expansion-line" style="--delay: 1.0;" d="M500,250 Q 550,150 480,80" /> <!-- Europe -->
+                        <path id="path-asia" class="expansion-line" style="--delay: 1.5;" d="M500,250 Q 650,200 750,150" /> <!-- Asia -->
+                        <path id="path-america" class="expansion-line" style="--delay: 2.0;" d="M500,250 Q 350,50 150,120" /> <!-- Americas -->
+                        <path id="path-oceania" class="expansion-line" style="--delay: 2.5;" d="M500,250 Q 650,350 850,280" /> <!-- Oceania -->
+
+                        <!-- Animated Vehicles -->
+                        <!-- Container Africa -->
+                        <g class="moving-vehicle" style="--delay: 0.5;">
+                            <g transform="translate(-10, -10)">
+                                <path d="M2,6 h16 v8 h-16 Z" fill="none" stroke="var(--gold-main)" stroke-width="2"/>
+                                <line x1="6" y1="6" x2="6" y2="14" stroke="var(--gold-main)" stroke-width="2"/>
+                                <line x1="10" y1="6" x2="10" y2="14" stroke="var(--gold-main)" stroke-width="2"/>
+                                <line x1="14" y1="6" x2="14" y2="14" stroke="var(--gold-main)" stroke-width="2"/>
+                            </g>
+                            <animateMotion dur="4s" repeatCount="indefinite"><mpath href="#path-africa"/></animateMotion>
+                        </g>
+
+                        <!-- Plane Europe -->
+                        <g class="moving-vehicle" style="--delay: 1.0;">
+                            <g transform="translate(-12, -12) scale(0.7) rotate(90 16 16)">
+                                <path d="M14.5,2 L14.5,12 L4,17 L4,20 L14.5,17.5 L14.5,26 L11.5,28 L11.5,30 L16,29 L20.5,30 L20.5,28 L17.5,26 L17.5,17.5 L28,20 L28,17 L17.5,12 L17.5,2 C17.5,0.895 16.605,0 15.5,0 C14.395,0 13.5,0.895 13.5,2 Z" fill="var(--gold-main)"></path>
+                            </g>
+                            <animateMotion dur="4s" repeatCount="indefinite" rotate="auto"><mpath href="#path-europe"/></animateMotion>
+                        </g>
+
+                        <!-- Boat Asia -->
+                        <g class="moving-vehicle" style="--delay: 1.5;">
+                            <g transform="translate(-12, -12) scale(0.8)">
+                                <path d="M2,18 l0,6 h22 l6,-6 Z" fill="var(--gold-main)"/>
+                                <rect x="4" y="10" width="4" height="7" fill="var(--gold-main)"/>
+                                <rect x="9" y="10" width="4" height="7" fill="var(--gold-main)"/>
+                                <rect x="14" y="10" width="4" height="7" fill="var(--gold-main)"/>
+                                <rect x="19" y="10" width="4" height="7" fill="var(--gold-main)"/>
+                                <rect x="2" y="8" width="5" height="10" fill="var(--gold-main)"/>
+                            </g>
+                            <animateMotion dur="6s" repeatCount="indefinite" rotate="auto"><mpath href="#path-asia"/></animateMotion>
+                        </g>
+
+                        <!-- Plane America -->
+                        <g class="moving-vehicle" style="--delay: 2.0;">
+                            <g transform="translate(-12, -12) scale(0.7) rotate(90 16 16)">
+                                <path d="M14.5,2 L14.5,12 L4,17 L4,20 L14.5,17.5 L14.5,26 L11.5,28 L11.5,30 L16,29 L20.5,30 L20.5,28 L17.5,26 L17.5,17.5 L28,20 L28,17 L17.5,12 L17.5,2 C17.5,0.895 16.605,0 15.5,0 C14.395,0 13.5,0.895 13.5,2 Z" fill="var(--gold-main)"></path>
+                            </g>
+                            <animateMotion dur="5s" repeatCount="indefinite" rotate="auto"><mpath href="#path-america"/></animateMotion>
+                        </g>
+
+                        <!-- Boat Oceania -->
+                        <g class="moving-vehicle" style="--delay: 2.5;">
+                            <g transform="translate(-12, -12) scale(0.8)">
+                                <path d="M2,18 l0,6 h22 l6,-6 Z" fill="var(--gold-main)"/>
+                                <rect x="4" y="10" width="4" height="7" fill="var(--gold-main)"/>
+                                <rect x="9" y="10" width="4" height="7" fill="var(--gold-main)"/>
+                                <rect x="14" y="10" width="4" height="7" fill="var(--gold-main)"/>
+                                <rect x="19" y="10" width="4" height="7" fill="var(--gold-main)"/>
+                                <rect x="2" y="8" width="5" height="10" fill="var(--gold-main)"/>
+                            </g>
+                            <animateMotion dur="7s" repeatCount="indefinite" rotate="auto"><mpath href="#path-oceania"/></animateMotion>
+                        </g>
+
 
                         <!-- Nodes -->
                         <!-- Hub Center (Comoros/Africa East) -->
@@ -678,8 +760,6 @@
                     </svg>
                 </div>
 
-                <h2>AB TRANSIT EST BIEN PLUS ENCORE</h2>
-                <p>De nombreux projets novateurs sont actuellement en cours de développement pour enrichir et interconnecter notre écosystème. L'avenir nous réserve de grandes ambitions avec une expansion progressive à travers toute l'Afrique, puis vers une dimension internationale pour toujours mieux vous accompagner.</p>
             </div>
         </section>
     </div>
